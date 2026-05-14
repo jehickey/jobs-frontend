@@ -1,0 +1,13 @@
+<h2>Login</h2>
+
+<form (submit)="onSubmit($event)">
+    <label>Email</label>
+    <input type="email" name="email" [ngModel]="email()" (ngModelChange)="email.set($event)" />
+
+    <label>Password</label>
+    <input type="password" name="password" [ngModel]="password()" (ngModelChange)="password.set($event)" />
+
+    <button type="submit">Login</button>
+</form>
+<p>Debug: {{ email() }} / {{password()}}</p>
+<p>Status: {{ result() }} </p>

@@ -67,7 +67,10 @@
               "buildTarget": "jobs-ui:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "allowedHosts": ["jobs.ehickey.com"]
+          }
         },
         "test": {
           "builder": "@angular/build:unit-test"
