@@ -1,0 +1,54 @@
+#Topbar {
+    display: flex;
+    background: #000000;
+    color: #ffffff;
+    padding: 1rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+#Title {
+    display: flex;
+    font-size: 2em;
+}
+
+#Topbar a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#Menu {
+    display: flex;
+    flex: 1;
+    font-size: 1em;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.menuItem {
+    //display: flex;
+    //flex: 1;
+    //font-size: 1em;
+    //align-items: flex-end;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    justify-content: center;
+}
+
+.middle {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    /* horizontal center */
+    align-items: flex-end;
+    /* vertical bottom */
+}
+
+.right {
+    margin-left: auto;
+    /* pushes it to the right in a flex container */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

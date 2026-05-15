@@ -1,0 +1,32 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 400px;
+}
+
+.field-label {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.field-input {
+    padding: 8px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.error {
+    color: #d32f2f;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.success {
+    color: #2e7d32;
+    /* green */
+    font-size: 14px;
+    margin-top: 4px;
+}

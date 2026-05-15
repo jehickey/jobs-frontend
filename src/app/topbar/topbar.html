@@ -1,0 +1,24 @@
+<div id="Topbar">
+    <div id="Title"><a routerLink="/">Jobsearch Tracker</a></div>
+
+    <div class="middle">
+        <div id="Menu">
+            <div class="menuItem">Apps</div>
+            <div class="menuItem">Companies</div>
+            <div class="menuItem">Events</div>
+            <div class="menuItem">Contacts</div>
+            <div class="menuItem">Data</div>
+
+        </div>
+    </div>
+
+    <div class="right">
+        @if (auth.loggedIn()) {
+        Hi {{ auth.realName() }}
+        <button (click)="auth.logout()">Logout</button>
+
+        } @else {
+        <a routerLink="/login">Sign In</a>
+        }
+    </div>
+</div>

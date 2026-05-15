@@ -1,13 +1,31 @@
-<h2>Login</h2>
+<div class="login-wrapper">
+    <div class="login-card">
 
-<form (submit)="onSubmit($event)">
-    <label>Email</label>
-    <input type="email" name="email" [ngModel]="email()" (ngModelChange)="email.set($event)" />
+        <h2>Log Into Your Account</h2>
 
-    <label>Password</label>
-    <input type="password" name="password" [ngModel]="password()" (ngModelChange)="password.set($event)" />
+        <form (submit)="onSubmit($event)">
+            <div>
+                <label>Email</label>
+                <input type="email" name="email" [ngModel]="email()" (ngModelChange)="email.set($event)" />
+                <div class="forgot">Forgot User ID?</div>
+            </div>
 
-    <button type="submit">Login</button>
-</form>
-<p>Debug: {{ email() }} / {{password()}}</p>
-<p>Status: {{ result() }} </p>
+            <div>
+                <label>Password</label>
+                <input type="password" name="password" [ngModel]="password()" (ngModelChange)="password.set($event)" />
+                <div class="forgot">Forgot Password?</div>
+            </div>
+
+            <div>
+                @if (failed === true) {
+                <p class="error">Login Failed: {{ failReason() }}</p>
+                }
+                <button type="submit">{{ buttonText() }}</button>
+            </div>
+            <div class="center">
+                <a routerLink="/createuser">Create an Account</a>
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="form-container">
+
+    <div>
+        <label class="field-label">Real Name</label>
+        <input class="field-input" formControlName="name">
+        @if (form.controls.name.invalid && form.controls.name.touched) {
+        <div class=" error">Name is required
+        </div>
+        }
+    </div>
+
+    <div>
+        <label class="field-label">Email</label>
+        <input name="userName" class="field-input" formControlName="userName">
+        @if (form.controls.userName.invalid && form.controls.userName.dirty) {
+        <div class="error">Invalid email</div>
+        }
+        @if (usernameAvailable === true) {
+        <div class="success">This email is available</div>
+        }
+        @if (usernameAvailable === false) {
+        <div class="error">This email is NOT available</div>
+        }
+    </div>
+
+    <div>
+        <label class="field-label">Password</label>
+        <input class="field-input" type="password" formControlName="password">
+        @if (form.controls.password.invalid && form.controls.password.touched) {
+        <div class="error">Password must be at least 6 characters</div>
+        }
+    </div>
+    <div>
+        <button type="submit" [disabled]="form.invalid">Create Account</button>
+    </div>
+</form>
