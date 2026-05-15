@@ -1,0 +1,58 @@
+.wrapper {
+    display: flex;
+    justify-content: center; // centers the whole block horizontally
+    gap: 40px; // space between sidebar and form
+    margin-top: 40px; // optional
+}
+
+.card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 350px;
+    margin-top: 5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+#AppsList {
+    width: 250px; // fixed width for the sidebar
+    background: #f5f5f5; // optional
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 6px;
+}
+
+#AppsForm {
+    width: 500px; // fixed width for the form
+    background: #ffffff; // optional
+    padding: 20px;
+    border-radius: 6px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    color: #ff0000;
+}
+
+.middle {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    /* horizontal center */
+    align-items: flex-end;
+    /* vertical bottom */
+}
+
+.right {
+    margin-left: auto;
+    /* pushes it to the right in a flex container */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

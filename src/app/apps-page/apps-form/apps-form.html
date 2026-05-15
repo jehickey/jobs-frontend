@@ -1,0 +1,64 @@
+<div class="wrapper">
+    <div class="card">
+        <form [formGroup]="form">
+
+            <div>
+                <select formControlName="statusId">
+                    <option>Alpha</option>
+                    <option>Beta</option>
+                </select>
+            </div>
+
+            <div class="rightstack">
+                <div>Created: [date]</div>
+                <div>Last Updated: [date]</div>
+            </div>
+
+            <div>
+                <label>Position</label>
+                <input name="position" formControlName="position" />
+            </div>
+
+            <div>
+                <label>Organization</label>
+                <input name="email" formControlName="organization" />
+            </div>
+            <div>
+                <label>Date Applied</label>
+                <input name="email" formControlName="dateApplied" />
+            </div>
+            <div>
+                <label>Last Response</label>
+                <input name="email" formControlName="lastResponse" />
+            </div>
+            <div>
+                <label>Application URL</label>
+                <input name="email" formControlName="url" />
+            </div>
+            <div>
+                <label>URL Login Name</label>
+                <input name="email" formControlName="siteUser" />
+            </div>
+            <div>
+                <label>Source</label>
+                <select formControlName="sourceId">
+                    <option>Alpha</option>
+                    <option>Beta</option>
+                </select>
+            </div>
+            <div>
+                <label>Job Posting</label>
+                <textarea name="email" formControlName="jobPosting"></textarea>
+            </div>
+            <div>
+                <label>Notes</label>
+                <textarea name="email" formControlName="notes"></textarea>
+            </div>
+
+        </form>
+
+
+        <button onclick="onCreate()">Delete this Application</button>
+
+    </div>
+</div>

@@ -1,0 +1,29 @@
+label {
+    display: inline-block;
+    width: 150px;
+}
+
+.datesection {
+    display: flex;
+    width: 100%;
+    justify-content: right;
+    border: 1px solid black;
+}
+
+.right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rightstack {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    /* stack vertically */
+    align-items: flex-end;
+    /* align text to the left */
+    gap: 6px;
+    /* vertical spacing */
+}
