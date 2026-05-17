@@ -27,3 +27,17 @@ label {
     gap: 6px;
     /* vertical spacing */
 }
+
+input.pending,
+input.pending:focus {
+    border: 2px solid blue;
+    outline: none;
+    box-shadow: 0 0 4px blue;
+}
+
+input.error,
+input.error:focus {
+    border: 2px solid red;
+    outline: none;
+    box-shadow: 0 0 4px red;
+}

@@ -1,12 +1,10 @@
 <h2>Applications</h2>
 <div class="wrapper">
 
-    <div id="#AppsList">
-        <app-apps-list />
-    </div>
+    <app-apps-list class="appsList" (selected)="onAppSelected($event)">
+    </app-apps-list>
 
-    <div id="#AppsForm">
-        <button>Create new Application</button>
-        <app-apps-form />
-    </div>
+    <app-apps-form class="appsForm" [applicationId]="selectedId">
+    </app-apps-form>
+
 </div>

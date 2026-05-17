@@ -8,4 +8,11 @@ import { AppsList } from './apps-list/apps-list';
   templateUrl: './apps-page.html',
   styleUrl: './apps-page.scss',
 })
-export class AppsPage { }
+export class AppsPage {
+
+  selectedId = 0;
+  onAppSelected(id: number) {
+    this.selectedId = id;
+  }
+
+}

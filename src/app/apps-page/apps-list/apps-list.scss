@@ -1,0 +1,13 @@
+.app-item {
+    padding: 1px;
+    cursor: pointer;
+}
+
+.app-item.selected {
+    background-color: #d0e0ff;
+    font-weight: bold;
+}
+
+.app-item:hover {
+    background-color: #f0f0ff;
+}

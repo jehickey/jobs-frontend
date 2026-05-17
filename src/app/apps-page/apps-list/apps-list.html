@@ -1,3 +1,13 @@
+<div class="app-list">
+    <div class="app-item" *ngFor="let app of applications()" (click)="select(app)"
+        [class.selected]="app.id === selectedId">
+        {{ app.position || '(no title)' }}
+    </div>
+</div>
+
+
+
+<!--
 <div>Alpha</div>
 <div>Beta</div>
 <div>Gamma</div>
@@ -10,3 +20,4 @@
 <div>Comes</div>
 <div>After</div>
 <div>Delta</div>
+-->

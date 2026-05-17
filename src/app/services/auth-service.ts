@@ -33,6 +33,7 @@ export class AuthService {
     this.sessionId.set(id);
     this.getSessionInfo();
     this.loggedIn.set(true);
+    console.log("Iniated SessionID " + id + " (user:" + this.userId + ")");
   }
 
   //Terminates the local session and clears all info

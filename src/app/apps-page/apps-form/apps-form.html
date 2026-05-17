@@ -1,5 +1,9 @@
 <div class="wrapper">
     <div class="card">
+        <div class="right">
+            <button type="button" (click)="onCreate()">Create new Application</button>
+        </div>
+        @if (data().id > 0) {
         <form [formGroup]="form">
 
             <div>
@@ -7,37 +11,40 @@
                     <option>Alpha</option>
                     <option>Beta</option>
                 </select>
+                {{ data().id }}
             </div>
 
             <div class="rightstack">
-                <div>Created: [date]</div>
-                <div>Last Updated: [date]</div>
+                <div>Created: {{data().dateApplied}}</div>
+                <div>Last Updated: {{data().dateApplied}}</div>
             </div>
 
             <div>
-                <label>Position</label>
-                <input name="position" formControlName="position" />
+                <app-field type="text" label="Position" controlName="position"></app-field>
             </div>
 
             <div>
                 <label>Organization</label>
-                <input name="email" formControlName="organization" />
+                <input name="email" formControlName="organization" [class.pending]="pending['organization']"
+                    [class.error]="error['organization']" />
             </div>
             <div>
                 <label>Date Applied</label>
-                <input name="email" formControlName="dateApplied" />
+                <input name="email" formControlName="dateApplied" [class.pending]="pending['dateApplied']"
+                    [class.error]="error['dateApplied']" />
+
             </div>
             <div>
                 <label>Last Response</label>
-                <input name="email" formControlName="lastResponse" />
+                <input name="email" formControlName="lastResponse" [class.pending]="pending['lastResponse']"
+                    [class.error]="error['lastResponse']" />
+
             </div>
             <div>
-                <label>Application URL</label>
-                <input name="email" formControlName="url" />
+                <app-field type="text" label="Application URL" controlName="url"></app-field>
             </div>
             <div>
-                <label>URL Login Name</label>
-                <input name="email" formControlName="siteUser" />
+                <app-field type="text" label="Url Login Name" controlName="siteuser"></app-field>
             </div>
             <div>
                 <label>Source</label>
@@ -47,18 +54,17 @@
                 </select>
             </div>
             <div>
-                <label>Job Posting</label>
-                <textarea name="email" formControlName="jobPosting"></textarea>
+                <app-field type="textarea" label="Job Posting" controlName="jobPosting"></app-field>
             </div>
+
             <div>
-                <label>Notes</label>
-                <textarea name="email" formControlName="notes"></textarea>
+                <app-field type="textarea" label="Notes" controlName="notes"></app-field>
             </div>
 
         </form>
 
 
         <button onclick="onCreate()">Delete this Application</button>
-
+        }
     </div>
 </div>
