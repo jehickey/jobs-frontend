@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Input, Optional, Host, SkipSelf } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { Input, Output, Optional, Host, SkipSelf, HostBinding } from '@angular/core';
 import { FormControl, FormGroupDirective } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ApplicationService } from '../services/application-service';
@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { SettingsService } from '../services/settings-service';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-field',
@@ -23,6 +24,15 @@ export class Field implements OnDestroy {
   @Input() label = '';
   @Input() type: 'text' | 'textarea' | 'select' | 'checkbox' | 'custom' = 'text';
 
+  @Input() backgroundColor = '';
+
+  @Input() listEndpoint?: string;
+  @Input() createEndpoint?: string;
+  @Input() allowCreate = false;
+
+  @Input() allowIncrement = false;
+
+
   @Input() options: any[] = [];
   @Input() optionLabel = '';
   @Input() optionValue = '';
@@ -30,6 +40,9 @@ export class Field implements OnDestroy {
   control!: FormControl;
   pending = false;
   error = false;
+
+  @Output() colorChange = new EventEmitter<string>();
+  selectedColor = '';
 
   private debounceTimer: any;
   private sub?: Subscription;
@@ -42,6 +55,15 @@ export class Field implements OnDestroy {
   ) { }
 
   ngAfterViewInit() {
+
+    if (this.type == "select" && this.listEndpoint) {
+      this.appService.getList(this.listEndpoint).subscribe(list => {
+        this.options = list;
+        this.updateSelectedColor();
+        this.cdr.detectChanges();
+      });
+    }
+
     // Resolve the control AFTER Angular builds the form tree
     queueMicrotask(() => {
       this.control = this.parentForm.form.get(this.controlName) as FormControl;
@@ -53,6 +75,7 @@ export class Field implements OnDestroy {
 
       // Now that control exists, set up subscription
       this.sub = this.control.valueChanges.subscribe(value => {
+        this.updateSelectedColor();
         if (!this.control.dirty) return;
 
         if (this.debounceTimer) clearTimeout(this.debounceTimer);
@@ -88,4 +111,40 @@ export class Field implements OnDestroy {
     this.sub?.unsubscribe();
     if (this.debounceTimer) clearTimeout(this.debounceTimer);
   }
+
+
+  reset() {
+    this.pending = false;
+    this.error = false;
+    clearTimeout(this.debounceTimer);
+    this.control?.markAsPristine();
+    this.cdr.detectChanges();
+  }
+
+  private updateSelectedColor() {
+    if (this.type != "select") return;
+    const id = this.control?.value;
+    const opt = this.options.find(o => o.id == id);
+    if (opt) {
+      if (opt.color == '') opt.color = "#FFFFFF";
+      this.selectedColor = opt.color;
+      this.colorChange.emit(this.selectedColor);
+    }
+  }
+
+  onDblClickSelect() {
+    if (!this.allowIncrement) return;
+    if (!this.options || !this.control) return;
+
+    const currentId = this.control.value;
+    const index = this.options.findIndex(o => o.id == currentId);
+
+    if (index === -1) return;
+
+    const nextIndex = (index + 1) % this.options.length;
+    const next = this.options[nextIndex];
+
+    this.control.setValue(next.id);
+  }
+
 }

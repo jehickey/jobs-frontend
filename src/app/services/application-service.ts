@@ -13,6 +13,15 @@ export class ApplicationService {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
+  // backend returns: [ { id:number, label:string } ]
+  getList(endpoint: string) {
+    return this.http.get<any[]>(`${this.portBase}${endpoint}`, {
+      headers: { 'X-SessionId': this.auth.sessionId() ?? '' }
+    });
+  }
+
+
+
   listApplications() {
     return this.http.get<ApplicationData[]>(`${this.portBase}/applications`, {
       headers: { 'X-SessionId': this.auth.sessionId() ?? '' }

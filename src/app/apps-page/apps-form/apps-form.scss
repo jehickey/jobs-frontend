@@ -10,6 +10,13 @@ label {
     border: 1px solid black;
 }
 
+.left {
+    margin-left: 0;
+    display: flex;
+    align-items: left;
+    gap: 10px;
+}
+
 .right {
     margin-left: auto;
     display: flex;
@@ -28,16 +35,21 @@ label {
     /* vertical spacing */
 }
 
-input.pending,
-input.pending:focus {
-    border: 2px solid blue;
-    outline: none;
-    box-shadow: 0 0 4px blue;
+.icon {
+    @extend .rightstack;
+    width: 25px;
+    height: 25px;
+    background-color: #aaaaaa;
+    margin: 1px;
 }
 
-input.error,
-input.error:focus {
-    border: 2px solid red;
-    outline: none;
-    box-shadow: 0 0 4px red;
+h2 {
+    //display: flex;
+    border: 1px solid black;
+}
+
+.appTitleBar {
+    display: flex;
+    border: 1px solid black;
+    padding: 5px;
 }

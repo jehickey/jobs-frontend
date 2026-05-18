@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class SettingsService {
-  autosaveDelay = 1000;
+  autosaveDelay = 500;
 
   //not implemented yet, made for when it gets settings from db
   loadFromServer(config: any) {

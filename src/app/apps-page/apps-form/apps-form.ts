@@ -31,6 +31,8 @@ export class AppsForm {
 
   @Input() applicationId = 0;
 
+  statusColor = '';
+
   constructor(
     private fb: FormBuilder,
     private appService: ApplicationService,
@@ -60,38 +62,40 @@ export class AppsForm {
     //});
 
     this.loadApplication(0);
-
-    this.form.valueChanges.subscribe(() => {
-      for (const key of Object.keys(this.form.controls)) {
-        const control = this.form.get(key)!;
-        if (control.dirty)
-          if (control.dirty && !this.pending[key]) {
-            //reset any existing update timer
-            if (this.debounceTimers[key]) {
-              clearTimeout(this.debounceTimers[key]);
-            }
-            //set a new debounce timer
-            this.debounceTimers[key] = setTimeout(() => {
-
-              this.pending[key] = true;
-              this.error[key] = false;
-              this.cdr.detectChanges();
-              this.appService.updateField(this.data().id, key, control.value).subscribe({
-                next: () => {
-                  this.pending[key] = false;
-                  control.markAsPristine(); // resets dirty state
-                  this.cdr.detectChanges();
-                },
-                error: () => {
-                  this.pending[key] = false;
-                  this.error[key] = true;
-                  this.cdr.detectChanges();
+    /*
+        this.form.valueChanges.subscribe(() => {
+          
+          for (const key of Object.keys(this.form.controls)) {
+            const control = this.form.get(key)!;
+            if (control.dirty)
+              if (control.dirty && !this.pending[key]) {
+                //reset any existing update timer
+                if (this.debounceTimers[key]) {
+                  clearTimeout(this.debounceTimers[key]);
                 }
-              });
-            }, settings.autosaveDelay);  //set delay time in ms
+                //set a new debounce timer
+                this.debounceTimers[key] = setTimeout(() => {
+    
+                  this.pending[key] = true;
+                  this.error[key] = false;
+                  this.cdr.detectChanges();
+                  this.appService.updateField(this.data().id, key, control.value).subscribe({
+                    next: () => {
+                      this.pending[key] = false;
+                      control.markAsPristine(); // resets dirty state
+                      this.cdr.detectChanges();
+                    },
+                    error: () => {
+                      this.pending[key] = false;
+                      this.error[key] = true;
+                      this.cdr.detectChanges();
+                    }
+                  });
+                }, settings.autosaveDelay);  //set delay time in ms
+              }
           }
-      }
-    });
+        });
+        */
 
   }
 
@@ -102,11 +106,13 @@ export class AppsForm {
   }
 
   loadApplication(id: number) {
+
     if (id > 0) {
       this.appService.getApplication(id).subscribe({
         next: (app) => {
           if (app != null) {
             this.data.set(app);
+            this.form.reset(app);
             this.form.patchValue(app);
             //this.cdr.detectChanges();
             console.log("Saw: " + app.id);
@@ -137,6 +143,10 @@ export class AppsForm {
       next: () => {
       }
     })
+  }
+
+  onStatusColor(color: string) {
+    this.statusColor = color;
   }
 
 }

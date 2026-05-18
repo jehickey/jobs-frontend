@@ -3,31 +3,40 @@
         <div class="right">
             <button type="button" (click)="onCreate()">Create new Application</button>
         </div>
+
         @if (data().id > 0) {
         <form [formGroup]="form">
 
-            <div>
-                <select formControlName="statusId">
-                    <option>Alpha</option>
-                    <option>Beta</option>
-                </select>
-                {{ data().id }}
+            <div class="appTitleBar" [style.background]="statusColor">
+                <div class="left">
+                    <div>
+                        <app-field class="title-field" type="text" controlName="position"
+                            [backgroundColor]="statusColor"></app-field>
+                        <app-field type="select" label="" controlName="statusId" listEndpoint="/statuses"
+                            [allowIncrement]="true" (colorChange)="onStatusColor($event)"></app-field>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="icon"></div>
+                    <div class="icon"></div>
+                    <div class="icon"></div>
+                </div>
             </div>
 
+
+
+            <div>
+                <app-field type="select" label="Organization" controlName="organization"
+                    listEndpoint="/organizations"></app-field>
+            </div>
+
+
             <div class="rightstack">
-                <div>Created: {{data().dateApplied}}</div>
+                <div>#{{data().id}} Created: {{data().dateApplied}}</div>
                 <div>Last Updated: {{data().dateApplied}}</div>
             </div>
 
-            <div>
-                <app-field type="text" label="Position" controlName="position"></app-field>
-            </div>
 
-            <div>
-                <label>Organization</label>
-                <input name="email" formControlName="organization" [class.pending]="pending['organization']"
-                    [class.error]="error['organization']" />
-            </div>
             <div>
                 <label>Date Applied</label>
                 <input name="email" formControlName="dateApplied" [class.pending]="pending['dateApplied']"
@@ -44,7 +53,7 @@
                 <app-field type="text" label="Application URL" controlName="url"></app-field>
             </div>
             <div>
-                <app-field type="text" label="Url Login Name" controlName="siteuser"></app-field>
+                <app-field type="text" label="Url Login Name" controlName="siteUser"></app-field>
             </div>
             <div>
                 <label>Source</label>

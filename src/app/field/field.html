@@ -3,16 +3,22 @@
     <label *ngIf="label">{{ label }}</label>
 
     <!-- TEXT INPUT -->
-    <input *ngIf="type === 'text'" [formControl]="control" type="text">
+    <input *ngIf="type === 'text'" [formControl]="control" type="text" [style.background]="backgroundColor">
 
     <!-- TEXTAREA -->
     <textarea *ngIf="type === 'textarea'" [formControl]="control"></textarea>
 
     <!-- SELECT -->
-    <select *ngIf="type === 'select'" [formControl]="control">
-        <option *ngFor="let opt of options" [value]="opt[optionValue]">
-            {{ opt[optionLabel] }}
+    <select *ngIf="type === 'select'" [formControl]="control" [style.background]="selectedColor"
+        (dblclick)="onDblClickSelect()">
+        <option *ngFor="let opt of options" [value]="opt.id" [style.background]="opt.color">
+            {{ opt.name }}
         </option>
+
+        <!--
+        <option *ngFor="let opt of options" [value]="opt.[optionValue]">
+            {{ opt[optionLabel] }}
+        -->
     </select>
 
     <!-- CHECKBOX -->
