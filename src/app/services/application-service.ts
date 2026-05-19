@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApplicationData } from '../models/ApplicationData';
+import { ApplicationListData } from '../models/ApplicationListData';
 import { AuthService } from './auth-service';
 
 @Injectable({
@@ -9,7 +10,7 @@ import { AuthService } from './auth-service';
 export class ApplicationService {
   private base = window.location.origin;
   private portBase = this.base.replace(/:\d+$/, ':8081');
-  private apiBase = this.base + "/api";
+  private apiBase = this.base + "/api"; //can't use until nginx dev goes to normal port
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
@@ -23,7 +24,7 @@ export class ApplicationService {
 
 
   listApplications() {
-    return this.http.get<ApplicationData[]>(`${this.portBase}/applications`, {
+    return this.http.get<ApplicationListData[]>(`${this.portBase}/applications`, {
       headers: { 'X-SessionId': this.auth.sessionId() ?? '' }
     });
   }

@@ -39,8 +39,10 @@ label {
     @extend .rightstack;
     width: 25px;
     height: 25px;
-    background-color: #aaaaaa;
+    background-color: transparent;
     margin: 1px;
+    color: black;
+    cursor: pointer;
 }
 
 h2 {
@@ -50,6 +52,70 @@ h2 {
 
 .appTitleBar {
     display: flex;
-    border: 1px solid black;
+    //border: 1px solid black;
     padding: 5px;
+    //background: linear-gradient(to left, white, transparent);
+    -webkit-mask-image: linear-gradient(to left, transparent, black 90%);
+    mask-image: linear-gradient(to left, transparent, black 90%);
+}
+
+.appTitleBarBackground {
+    //display: flex;
+    //border: 1px solid black;
+    //padding: 5px;
+    //background: linear-gradient(to left, white, transparent);
+    -webkit-mask-image: linear-gradient(to left, transparent, black 90%);
+    mask-image: linear-gradient(to left, transparent, black 90%);
+}
+
+.appTitleBarx {
+    display: flex;
+    padding: 5px;
+    position: relative;
+    /* required for the overlay */
+    background-color: blue; //var(--status-color);
+    /* your script sets this */
+    overflow: hidden;
+    /* ensures the fade overlay stays clipped */
+}
+
+.appTitleBarx::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80%;
+    /* width of the fade */
+    height: 100%;
+    pointer-events: none;
+
+    /* Fade from the dynamic background color → transparent */
+    background: linear-gradient(to left, var(--status-color), transparent);
+}
+
+
+
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup {
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    min-width: 250px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
 }

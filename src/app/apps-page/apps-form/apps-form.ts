@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, Input, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApplicationData, NewApplicationData } from '../../models/ApplicationData';
 import { ApplicationService } from '../../services/application-service';
@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from '../../services/settings-service';
 import { FocusNext } from '@angular/cdk/menu';
 import { Field } from "../../field/field";
+import { EventEmitter } from '@angular/core';
 
 
 @Component({
@@ -23,6 +24,8 @@ export class AppsForm {
 
   form!: FormGroup;
   data = signal<ApplicationData>(NewApplicationData());
+  allowEdits = signal<boolean>(true);
+  showDeletePopup = signal<boolean>(false);
 
   changed: Record<string, boolean> = {};
   pending: Record<string, boolean> = {};
@@ -30,6 +33,8 @@ export class AppsForm {
   private debounceTimers: Record<string, any> = {};
 
   @Input() applicationId = 0;
+
+  @Output() RefreshList = new EventEmitter<boolean>();
 
   statusColor = '';
 
@@ -57,46 +62,11 @@ export class AppsForm {
       notes: this.fb.control(''),
     });
 
-    //this.form.get('position')!.valueChanges.subscribe(value => {
-    //  this.appService.updateField(0, 'position', value).subscribe();
-    //});
-
+    this.form.get('position')!.valueChanges.subscribe(value => {
+      this.RefreshList.emit(true)
+      this.cdr.detectChanges();
+    });
     this.loadApplication(0);
-    /*
-        this.form.valueChanges.subscribe(() => {
-          
-          for (const key of Object.keys(this.form.controls)) {
-            const control = this.form.get(key)!;
-            if (control.dirty)
-              if (control.dirty && !this.pending[key]) {
-                //reset any existing update timer
-                if (this.debounceTimers[key]) {
-                  clearTimeout(this.debounceTimers[key]);
-                }
-                //set a new debounce timer
-                this.debounceTimers[key] = setTimeout(() => {
-    
-                  this.pending[key] = true;
-                  this.error[key] = false;
-                  this.cdr.detectChanges();
-                  this.appService.updateField(this.data().id, key, control.value).subscribe({
-                    next: () => {
-                      this.pending[key] = false;
-                      control.markAsPristine(); // resets dirty state
-                      this.cdr.detectChanges();
-                    },
-                    error: () => {
-                      this.pending[key] = false;
-                      this.error[key] = true;
-                      this.cdr.detectChanges();
-                    }
-                  });
-                }, settings.autosaveDelay);  //set delay time in ms
-              }
-          }
-        });
-        */
-
   }
 
   ngOnChanges() {
@@ -126,15 +96,43 @@ export class AppsForm {
   }
 
   public onCreate() {
-    this.data.set(NewApplicationData());
-    this.form.patchValue(this.data);
+    //this.data.set(NewApplicationData());
+    //this.form.patchValue(this.data());
     this.appService.createApplication().subscribe({
       next: (result) => {
         console.log("OnCreate() got back an id of " + result.applicationId);
-        this.data.update(app => ({ ...app, id: result.applicationId }));
+        this.loadApplication(result.applicationId);
+        //this.data.update(app => ({ ...app, id: result.applicationId }));
         this.cdr.detectChanges();
+        this.RefreshList.emit(true)
       }
     })
+  }
+
+  public onDelete() {
+    //popup verification window
+    this.showDeletePopup.set(true);
+    if (!this.data() || this.data().id == 0) return;
+    console.log("delete?");
+  }
+
+  public onCancelDelete() {
+    this.showDeletePopup.set(false);
+    console.log("Cancel delete");
+  }
+
+  public onConfirmDelete() {
+    console.log("Do the delete");
+    this.showDeletePopup.set(false);
+    if (!this.data() || this.data().id == 0) return;
+
+    this.appService.deleteApplication(this.data().id).subscribe(result => {
+      console.log("Done: " + result);
+      this.data.set(NewApplicationData());
+      this.RefreshList.emit(true)
+    });
+
+    console.log("Delete call made...");
   }
 
   save() {
@@ -147,6 +145,10 @@ export class AppsForm {
 
   onStatusColor(color: string) {
     this.statusColor = color;
+  }
+
+  public onToggleEdit() {
+    this.allowEdits.set(!this.allowEdits());
   }
 
 }

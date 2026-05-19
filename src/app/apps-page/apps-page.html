@@ -1,10 +1,10 @@
 <h2>Applications</h2>
 <div class="wrapper">
 
-    <app-apps-list class="appsList" (selected)="onAppSelected($event)">
+    <app-apps-list class="appsList" (selected)="onAppSelected($event)" [refreshTrigger]="refreshList">
     </app-apps-list>
 
-    <app-apps-form class="appsForm" [applicationId]="selectedId">
+    <app-apps-form class="appsForm" [applicationId]="selectedId" (RefreshList)="onRefreshList()">
     </app-apps-form>
 
 </div>

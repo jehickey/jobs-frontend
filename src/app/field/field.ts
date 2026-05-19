@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { SettingsService } from '../services/settings-service';
 import { EventEmitter } from '@angular/core';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-field',
@@ -31,6 +32,7 @@ export class Field implements OnDestroy {
   @Input() allowCreate = false;
 
   @Input() allowIncrement = false;
+  @Input() editable = true;
 
 
   @Input() options: any[] = [];
@@ -40,6 +42,8 @@ export class Field implements OnDestroy {
   control!: FormControl;
   pending = false;
   error = false;
+
+  inputValue = signal('');
 
   @Output() colorChange = new EventEmitter<string>();
   selectedColor = '';
@@ -73,8 +77,20 @@ export class Field implements OnDestroy {
         return;
       }
 
+      this.inputValue.set(this.control.value);
+      if (this.type === "select") {
+        const selected = this.options.find(o => o.id === this.control.value);
+        if (selected) {
+          this.inputValue.set(selected.name ?? "x");
+          console.log("SELECT: " + selected.color);
+        } else {
+          console.log("SELECT: failed to get a value");
+        }
+      }
+
       // Now that control exists, set up subscription
       this.sub = this.control.valueChanges.subscribe(value => {
+        this.inputValue.set(value);
         this.updateSelectedColor();
         if (!this.control.dirty) return;
 

@@ -3,6 +3,9 @@
     <label *ngIf="label">{{ label }}</label>
 
     <!-- TEXT INPUT -->
+    @if (!editable) {
+    {{this.inputValue()}}
+    } @else {
     <input *ngIf="type === 'text'" [formControl]="control" type="text" [style.background]="backgroundColor">
 
     <!-- TEXTAREA -->
@@ -26,5 +29,7 @@
 
     <!-- CUSTOM ELEMENT (future) -->
     <ng-content *ngIf="type === 'custom'"></ng-content>
+
+    }
 
 </div>

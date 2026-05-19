@@ -5,6 +5,13 @@
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
+:root {
+  --page-width: 800px;
+  --main-background: gray;
+  --main-text: black;
+  --card-background: white;
+}
+
 html {
   height: 100%;
   @include mat.theme((color: (primary: mat.$azure-palette,
@@ -24,8 +31,8 @@ body {
   // Set a default background, font and text colors for the application using
   // Angular Material's system-level CSS variables. Learn more about these
   // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
+  background-color: var(--main-background);
+  color: var(--main-text);
   font: var(--mat-sys-body-medium);
 
   // Reset the user agent margin.
@@ -35,6 +42,11 @@ body {
 
 /* You can add global styles to this file, and also import other style files */
 .title-field input {
+  font-size: 1em;
+  border: none;
+}
+
+.title-field {
   font-size: 2em;
   border: none;
 }

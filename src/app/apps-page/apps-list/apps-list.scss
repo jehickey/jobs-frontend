@@ -1,6 +1,11 @@
 .app-item {
     padding: 1px;
     cursor: pointer;
+    display: flex;
+    padding: 1px;
+    margin: 0;
+    margin-bottom: 2px;
+    //border-bottom: 1px solid black;
 }
 
 .app-item.selected {
@@ -10,4 +15,23 @@
 
 .app-item:hover {
     background-color: #f0f0ff;
+}
+
+.item-title {
+    //margin-left: auto;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    //gap: 10px;
+}
+
+.item-status {
+    font-size: .5em;
+    margin-left: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    display: flex;
+    //align-items: center;
+    //gap: 10px;
+    vertical-align: top;
 }

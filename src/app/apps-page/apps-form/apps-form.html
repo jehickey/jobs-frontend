@@ -1,79 +1,111 @@
-<div class="wrapper">
-    <div class="card">
-        <div class="right">
-            <button type="button" (click)="onCreate()">Create new Application</button>
+@if (data().id > 0) {
+<form [formGroup]="form">
+
+    <div class="appTitleBarx" [style.background]="statusColor">
+        <div class="left">
+            <div>
+                <app-field class="title-field" type="text" controlName="position" [backgroundColor]="statusColor"
+                    [editable]="allowEdits()"></app-field>
+                <app-field type="select" label="" controlName="statusId" listEndpoint="/statuses"
+                    [allowIncrement]="true" [editable]="allowEdits()" (colorChange)="onStatusColor($event)"></app-field>
+            </div>
         </div>
-
-        @if (data().id > 0) {
-        <form [formGroup]="form">
-
-            <div class="appTitleBar" [style.background]="statusColor">
-                <div class="left">
-                    <div>
-                        <app-field class="title-field" type="text" controlName="position"
-                            [backgroundColor]="statusColor"></app-field>
-                        <app-field type="select" label="" controlName="statusId" listEndpoint="/statuses"
-                            [allowIncrement]="true" (colorChange)="onStatusColor($event)"></app-field>
-                    </div>
-                </div>
-                <div class="right">
-                    <div class="icon"></div>
-                    <div class="icon"></div>
-                    <div class="icon"></div>
-                </div>
-            </div>
-
-
+        <div class="right">
+            <!--Document Plus-->
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" (click)="onCreate()">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+            </svg>
 
             <div>
-                <app-field type="select" label="Organization" controlName="organization"
-                    listEndpoint="/organizations"></app-field>
-            </div>
+                @if (allowEdits()) {
+                <!--lock open-->
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" (click)="onToggleEdit()">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                </svg>
+                } @else {
 
-
-            <div class="rightstack">
-                <div>#{{data().id}} Created: {{data().dateApplied}}</div>
-                <div>Last Updated: {{data().dateApplied}}</div>
-            </div>
-
-
-            <div>
-                <label>Date Applied</label>
-                <input name="email" formControlName="dateApplied" [class.pending]="pending['dateApplied']"
-                    [class.error]="error['dateApplied']" />
-
-            </div>
-            <div>
-                <label>Last Response</label>
-                <input name="email" formControlName="lastResponse" [class.pending]="pending['lastResponse']"
-                    [class.error]="error['lastResponse']" />
-
-            </div>
-            <div>
-                <app-field type="text" label="Application URL" controlName="url"></app-field>
-            </div>
-            <div>
-                <app-field type="text" label="Url Login Name" controlName="siteUser"></app-field>
-            </div>
-            <div>
-                <label>Source</label>
-                <select formControlName="sourceId">
-                    <option>Alpha</option>
-                    <option>Beta</option>
-                </select>
-            </div>
-            <div>
-                <app-field type="textarea" label="Job Posting" controlName="jobPosting"></app-field>
+                <!--lock closed-->
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" (click)="onToggleEdit()">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                </svg>
+                }
             </div>
 
             <div>
-                <app-field type="textarea" label="Notes" controlName="notes"></app-field>
+                <!--trashcan-->
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" (click)="onDelete()">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                </svg>
             </div>
-
-        </form>
-
-
-        <button onclick="onCreate()">Delete this Application</button>
-        }
+        </div>
     </div>
-</div>
+
+    @if (showDeletePopup()) {
+    <div class="overlay" (click)="onCancelDelete()">
+        <div class="popup" (click)="$event.stopPropagation()">
+            <h3>{{ data().position }}</h3>
+            <p>Delete this application?</p>
+            <div class="buttons">
+                <button (click)="onConfirmDelete()">OK</button>
+                <button (click)="onCancelDelete()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    }
+
+
+
+    <div class="rightstack">
+        <div>#{{data().id}} Created: {{data().dateApplied}}</div>
+        <div>Last Updated: {{data().dateApplied}}</div>
+    </div>
+
+    <div>
+        <app-field type="select" label="Company" controlName="organization" listEndpoint="/organizations"
+            [editable]="allowEdits()"></app-field>
+    </div>
+
+
+    <div>
+        <label>Date Applied</label>
+        <input name="email" formControlName="dateApplied" [class.pending]="pending['dateApplied']"
+            [class.error]="error['dateApplied']" />
+
+    </div>
+    <div>
+        <label>Last Response</label>
+        <input name="email" formControlName="lastResponse" [class.pending]="pending['lastResponse']"
+            [class.error]="error['lastResponse']" />
+
+    </div>
+    <div>
+        <app-field type="text" label="Application URL" controlName="url" [editable]="allowEdits()"></app-field>
+    </div>
+    <div>
+        <app-field type="text" label="Url Login Name" controlName="siteUser" [editable]="allowEdits()"></app-field>
+    </div>
+    <div>
+        <label>Source</label>
+        <select formControlName="sourceId">
+            <option>Alpha</option>
+            <option>Beta</option>
+        </select>
+    </div>
+    <div>
+        <app-field type="textarea" label="Job Posting" controlName="jobPosting" [editable]="allowEdits()"></app-field>
+    </div>
+
+    <div>
+        <app-field type="textarea" label="Notes" controlName="notes" [editable]="allowEdits()"></app-field>
+    </div>
+
+</form>
+}
